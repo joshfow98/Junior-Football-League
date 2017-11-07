@@ -46,6 +46,11 @@ public class Teams extends javax.swing.JFrame {
         btnUpdate.setText("Update");
 
         btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
 
@@ -89,6 +94,14 @@ public class Teams extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+       
+        Home h = new Home();
+        h.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments

@@ -41,76 +41,156 @@ public class Home extends javax.swing.JFrame {
         btnReferees = new javax.swing.JButton();
         btnNewTeam1 = new javax.swing.JButton();
         lblJFL = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        btnLeague = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(260, 0));
 
         btnNewPlayer.setText("New Player");
+        btnNewPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewPlayerActionPerformed(evt);
+            }
+        });
 
         btnNewMatch.setText("New Match");
+        btnNewMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewMatchActionPerformed(evt);
+            }
+        });
 
         btnNewCoach.setText("New Coach");
+        btnNewCoach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewCoachActionPerformed(evt);
+            }
+        });
 
         btnNewManager.setText("New Manager");
+        btnNewManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewManagerActionPerformed(evt);
+            }
+        });
 
         btnNewReferee.setText("New Referee");
+        btnNewReferee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewRefereeActionPerformed(evt);
+            }
+        });
 
         btnNewTeam.setText("New Team");
+        btnNewTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewTeamActionPerformed(evt);
+            }
+        });
 
         btnPlayers.setText("Players");
+        btnPlayers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlayersActionPerformed(evt);
+            }
+        });
 
         btnMatches.setText("Matches");
+        btnMatches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMatchesActionPerformed(evt);
+            }
+        });
 
         btnCoaches.setText(" Coaches");
+        btnCoaches.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCoachesActionPerformed(evt);
+            }
+        });
 
         btnManagers.setText("Managers");
+        btnManagers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagersActionPerformed(evt);
+            }
+        });
 
         btnReferees.setText("Referees");
+        btnReferees.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefereesActionPerformed(evt);
+            }
+        });
 
         btnNewTeam1.setText("Teams");
+        btnNewTeam1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewTeam1ActionPerformed(evt);
+            }
+        });
 
         lblJFL.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         lblJFL.setText("JFL");
+
+        btnLeague.setText("League");
+        btnLeague.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeagueActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnMatches, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNewTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNewReferee, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNewManager, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNewPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNewMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNewTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNewCoach, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnReferees, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnManagers, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCoaches, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(162, 162, 162)
                 .addComponent(lblJFL)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnMatches, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnNewTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnNewReferee, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnNewManager, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnNewPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnNewMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnNewTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnNewCoach, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnReferees, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnManagers, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnCoaches, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(137, 137, 137)
+                                .addComponent(btnLeague, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,12 +219,119 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(btnReferees)
                     .addComponent(btnManagers)
                     .addComponent(btnCoaches))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLeague)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNewPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewPlayerActionPerformed
+        
+        NewPlayer n = new NewPlayer();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewPlayerActionPerformed
+
+    private void btnNewMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewMatchActionPerformed
+        
+        NewMatch n = new NewMatch();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewMatchActionPerformed
+
+    private void btnNewTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTeamActionPerformed
+        
+        NewTeam n = new NewTeam();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewTeamActionPerformed
+
+    private void btnNewRefereeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewRefereeActionPerformed
+        
+        NewReferee n = new NewReferee();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewRefereeActionPerformed
+
+    private void btnNewManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewManagerActionPerformed
+        
+        NewManager n = new NewManager();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewManagerActionPerformed
+
+    private void btnNewCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewCoachActionPerformed
+        
+        NewCoach n = new NewCoach();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewCoachActionPerformed
+
+    private void btnPlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayersActionPerformed
+        
+        Players n = new Players();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnPlayersActionPerformed
+
+    private void btnMatchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchesActionPerformed
+        
+        Matches n = new Matches();
+        n.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMatchesActionPerformed
+
+    private void btnNewTeam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTeam1ActionPerformed
+        
+        Teams n = new Teams();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnNewTeam1ActionPerformed
+
+    private void btnRefereesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefereesActionPerformed
+        
+        Referees n = new Referees();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnRefereesActionPerformed
+
+    private void btnManagersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagersActionPerformed
+        
+        Managers n = new Managers();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnManagersActionPerformed
+
+    private void btnCoachesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCoachesActionPerformed
+        
+        Coaches n = new Coaches();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnCoachesActionPerformed
+
+    private void btnLeagueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeagueActionPerformed
+        
+        League n = new League();
+        n.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnLeagueActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -182,6 +369,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCoaches;
+    private javax.swing.JButton btnLeague;
     private javax.swing.JButton btnManagers;
     private javax.swing.JButton btnMatches;
     private javax.swing.JButton btnNewCoach;
@@ -194,6 +382,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnPlayers;
     private javax.swing.JButton btnReferees;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblJFL;
     // End of variables declaration//GEN-END:variables
 }
