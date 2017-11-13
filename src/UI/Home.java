@@ -39,7 +39,7 @@ public class Home extends javax.swing.JFrame {
         btnCoaches = new javax.swing.JButton();
         btnManagers = new javax.swing.JButton();
         btnReferees = new javax.swing.JButton();
-        btnNewTeam1 = new javax.swing.JButton();
+        btnTeams = new javax.swing.JButton();
         lblJFL = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         btnLeague = new javax.swing.JButton();
@@ -124,10 +124,10 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnNewTeam1.setText("Teams");
-        btnNewTeam1.addActionListener(new java.awt.event.ActionListener() {
+        btnTeams.setText("Teams");
+        btnTeams.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewTeam1ActionPerformed(evt);
+                btnTeamsActionPerformed(evt);
             }
         });
 
@@ -164,7 +164,7 @@ public class Home extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnMatches, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnNewTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(btnTeams, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(layout.createSequentialGroup()
@@ -213,7 +213,7 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPlayers)
                     .addComponent(btnMatches)
-                    .addComponent(btnNewTeam1))
+                    .addComponent(btnTeams))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReferees)
@@ -292,13 +292,14 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnMatchesActionPerformed
 
-    private void btnNewTeam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTeam1ActionPerformed
+    private void btnTeamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeamsActionPerformed
         
         Teams n = new Teams();
+        n.setTeamNames();
         n.setVisible(true);
         this.dispose();
         
-    }//GEN-LAST:event_btnNewTeam1ActionPerformed
+    }//GEN-LAST:event_btnTeamsActionPerformed
 
     private void btnRefereesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefereesActionPerformed
         
@@ -378,9 +379,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnNewPlayer;
     private javax.swing.JButton btnNewReferee;
     private javax.swing.JButton btnNewTeam;
-    private javax.swing.JButton btnNewTeam1;
     private javax.swing.JButton btnPlayers;
     private javax.swing.JButton btnReferees;
+    private javax.swing.JButton btnTeams;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblJFL;

@@ -5,14 +5,19 @@
  */
 package UI;
 
+import Objects.Team;
+
 /**
- *
+ * This class provides a UI for the user find currently
+ * store teams in the JFL database, retireve their details, update and 
+ * even delete them.
  * @author joshf
  */
 public class Teams extends javax.swing.JFrame {
 
+    static BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
     /**
-     * Creates new form Players
+     * Creates new form Players.
      */
     public Teams() {
         initComponents();
@@ -37,13 +42,33 @@ public class Teams extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cbTeamName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTeamName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTeamNameItemStateChanged(evt);
+            }
+        });
+        cbTeamName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTeamNameActionPerformed(evt);
+            }
+        });
+
+        tfTeamCaptain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTeamCaptainActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Team Name:");
 
         jLabel4.setText("Team Captain:");
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +78,11 @@ public class Teams extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,6 +133,46 @@ public class Teams extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void cbTeamNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTeamNameItemStateChanged
+        
+        Team team = new Team();
+        
+        team = te.getTeamDetails(String.valueOf(cbTeamName.getSelectedItem()));
+        
+        tfTeamCaptain.setText(team.getTeamCaptain());
+        
+    }//GEN-LAST:event_cbTeamNameItemStateChanged
+
+    private void tfTeamCaptainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTeamCaptainActionPerformed
+       
+    }//GEN-LAST:event_tfTeamCaptainActionPerformed
+
+    private void cbTeamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTeamNameActionPerformed
+
+    }//GEN-LAST:event_cbTeamNameActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        Team team = new Team();
+        
+        team.Team(String.valueOf(cbTeamName.getSelectedItem()), tfTeamCaptain.getText());
+        
+        te.setTeam(team);
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        Team team = new Team();
+        
+        team.Team(String.valueOf(cbTeamName.getSelectedItem()), tfTeamCaptain.getText());
+        
+        te.deleteTeam(team);
+        
+        cbTeamName.removeItem(team.getTeamName());
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -141,15 +211,40 @@ public class Teams extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Teams().setVisible(true);
+                setTeamNames();
             }
         });
+        
+        
+        
+        
     }
+    /**
+     * This method retrieves the names of all the teams
+     * in the JFL database and stores them in the 
+     * combo box so that the user is able to pick
+     * a team to view, update or delete.
+     */
+    public static void setTeamNames(){
+        
 
+        
+        String[] team = te.getTeamNames();
+        
+        for(int i = 0; i < team.length; i++){
+            
+            cbTeamName.addItem(team[i]);
+            
+        }
+        
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbTeamName;
+    private static javax.swing.JComboBox<String> cbTeamName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField tfTeamCaptain;

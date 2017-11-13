@@ -42,8 +42,18 @@ public class NewTeam extends javax.swing.JFrame {
         jLabel2.setText("Team Captain:");
 
         btnAddTeam.setText("Add Team");
+        btnAddTeam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTeamActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +111,24 @@ public class NewTeam extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTeamActionPerformed
+        
+        BackEnd.NewTeamEngine nte = new BackEnd.NewTeamEngine();
+        
+        nte.createTeam(tfTeamName.getText(), tfTeamCaptain.getText());
+        
+        tfTeamName.setText("");
+        tfTeamCaptain.setText("");
+        
+    }//GEN-LAST:event_btnAddTeamActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        
+        tfTeamName.setText("");
+        tfTeamCaptain.setText("");
+        
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments

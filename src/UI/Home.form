@@ -47,7 +47,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnMatches" min="-2" pref="126" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnNewTeam1" min="-2" pref="126" max="-2" attributes="0"/>
+                                      <Component id="btnTeams" min="-2" pref="126" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
@@ -113,7 +113,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnPlayers" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnMatches" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnNewTeam1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnTeams" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -221,12 +221,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefereesActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnNewTeam1">
+    <Component class="javax.swing.JButton" name="btnTeams">
       <Properties>
         <Property name="text" type="java.lang.String" value="Teams"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNewTeam1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTeamsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblJFL">
