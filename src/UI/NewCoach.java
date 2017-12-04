@@ -5,6 +5,10 @@
  */
 package UI;
 
+import Objects.Coach;
+import java.sql.Date;
+import BackEnd.NewCoachEngine;
+
 /**
  *
  * @author joshf
@@ -32,7 +36,6 @@ public class NewCoach extends javax.swing.JFrame {
         tfAddress = new javax.swing.JTextField();
         tfDOB = new javax.swing.JTextField();
         tfNumber = new javax.swing.JTextField();
-        tfTeam = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -42,6 +45,7 @@ public class NewCoach extends javax.swing.JFrame {
         btnAddPlayer = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        cbTeamName = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,14 +62,30 @@ public class NewCoach extends javax.swing.JFrame {
         jLabel7.setText("Last Name:");
 
         btnAddPlayer.setText("Add Coach");
+        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPlayerActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.setToolTipText("");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
+            }
+        });
+
+        cbTeamName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTeamNameActionPerformed(evt);
             }
         });
 
@@ -76,15 +96,6 @@ public class NewCoach extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(tfTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -103,7 +114,16 @@ public class NewCoach extends javax.swing.JFrame {
                                     .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnClear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnAddPlayer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(cbTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,9 +156,9 @@ public class NewCoach extends javax.swing.JFrame {
                 .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -151,6 +171,53 @@ public class NewCoach extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
+        
+        Coach c = new Coach();
+        
+        c.Coach(tfFirstName.getText(), tfLastName.getText(), tfAddress.getText(), Date.valueOf(tfDOB.getText()), tfNumber.getText(), String.valueOf(cbTeamName.getSelectedItem()));
+        
+        NewCoachEngine nce = new NewCoachEngine();
+        
+        nce.createNewCoach(c);
+        
+        tfFirstName.setText("");
+        tfLastName.setText("");
+        tfAddress.setText("");
+        tfDOB.setText("");
+        tfNumber.setText("");
+        
+    }//GEN-LAST:event_btnAddPlayerActionPerformed
+
+    public static void setTeamNames(){
+        
+        BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
+        
+        String[] team = te.getTeamNames();
+        
+        for(int i = 0; i < team.length; i++){
+            
+           cbTeamName.addItem(team[i]);
+            
+        }
+        
+        
+    }
+    
+    private void cbTeamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTeamNameActionPerformed
+
+    }//GEN-LAST:event_cbTeamNameActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+       
+        tfFirstName.setText("");
+        tfLastName.setText("");
+        tfAddress.setText("");
+        tfDOB.setText("");
+        tfNumber.setText("");
+        
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +253,7 @@ public class NewCoach extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NewCoach().setVisible(true);
+                setTeamNames();
             }
         });
     }
@@ -194,6 +262,7 @@ public class NewCoach extends javax.swing.JFrame {
     private javax.swing.JButton btnAddPlayer;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnExit;
+    private static javax.swing.JComboBox<String> cbTeamName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -205,6 +274,5 @@ public class NewCoach extends javax.swing.JFrame {
     private javax.swing.JTextField tfFirstName;
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfNumber;
-    private javax.swing.JTextField tfTeam;
     // End of variables declaration//GEN-END:variables
 }

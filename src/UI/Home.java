@@ -233,6 +233,7 @@ public class Home extends javax.swing.JFrame {
         
         NewPlayer n = new NewPlayer();
         n.setVisible(true);
+        n.setTeamNames();
         this.dispose();
         
     }//GEN-LAST:event_btnNewPlayerActionPerformed
@@ -265,6 +266,7 @@ public class Home extends javax.swing.JFrame {
         
         NewManager n = new NewManager();
         n.setVisible(true);
+        n.setTeamNames();
         this.dispose();
         
     }//GEN-LAST:event_btnNewManagerActionPerformed
@@ -273,6 +275,7 @@ public class Home extends javax.swing.JFrame {
         
         NewCoach n = new NewCoach();
         n.setVisible(true);
+        n.setTeamNames();
         this.dispose();
         
     }//GEN-LAST:event_btnNewCoachActionPerformed
@@ -281,6 +284,7 @@ public class Home extends javax.swing.JFrame {
         
         Players n = new Players();
         n.setVisible(true);
+        n.setTeamNames();
         this.dispose();
         
     }//GEN-LAST:event_btnPlayersActionPerformed
@@ -305,6 +309,7 @@ public class Home extends javax.swing.JFrame {
         
         Referees n = new Referees();
         n.setVisible(true);
+        n.setRefereeNames();
         this.dispose();
         
     }//GEN-LAST:event_btnRefereesActionPerformed
@@ -313,6 +318,7 @@ public class Home extends javax.swing.JFrame {
         
         Managers n = new Managers();
         n.setVisible(true);
+        n.setTeamNames();
         this.dispose();
         
     }//GEN-LAST:event_btnManagersActionPerformed
@@ -321,6 +327,7 @@ public class Home extends javax.swing.JFrame {
         
         Coaches n = new Coaches();
         n.setVisible(true);
+        n.setTeamNames();
         this.dispose();
         
     }//GEN-LAST:event_btnCoachesActionPerformed

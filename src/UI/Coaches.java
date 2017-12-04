@@ -5,6 +5,9 @@
  */
 package UI;
 
+import BackEnd.CoachEngine;
+import Objects.Coach;
+import java.sql.Date;
 /**
  *
  * @author joshf
@@ -27,11 +30,11 @@ public class Coaches extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cbTeam = new javax.swing.JComboBox<>();
+        cbTeamName = new javax.swing.JComboBox<>();
         tfLastName = new javax.swing.JTextField();
         tfAddress = new javax.swing.JTextField();
         tfDOB = new javax.swing.JTextField();
-        tfContactNumber = new javax.swing.JTextField();
+        tfNumber = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -45,7 +48,11 @@ public class Coaches extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cbTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTeamName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTeamNameItemStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Team:");
 
@@ -60,6 +67,11 @@ public class Coaches extends javax.swing.JFrame {
         jLabel8.setText("First Name:");
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -69,6 +81,11 @@ public class Coaches extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,7 +99,7 @@ public class Coaches extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbTeam, 0, 168, Short.MAX_VALUE)
+                            .addComponent(cbTeamName, 0, 168, Short.MAX_VALUE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel6)
                             .addComponent(jLabel3)
@@ -91,7 +108,7 @@ public class Coaches extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(tfFirstName)
                             .addComponent(tfLastName)
-                            .addComponent(tfContactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(tfNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                             .addComponent(tfDOB))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -107,7 +124,7 @@ public class Coaches extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
@@ -132,7 +149,7 @@ public class Coaches extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -147,6 +164,60 @@ public class Coaches extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void cbTeamNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTeamNameItemStateChanged
+        
+        CoachEngine ce = new CoachEngine();
+        Coach c = new Coach();
+        
+        c = ce.getCoach(String.valueOf(cbTeamName.getSelectedItem()));
+        
+        tfFirstName.setText(c.getFirstName());
+        tfLastName.setText(c.getLastName());
+        tfAddress.setText(c.getAddress());
+        tfDOB.setText(String.valueOf(c.getDateOfBirth()));
+        tfNumber.setText(c.getTelephoneNumber());
+        
+    }//GEN-LAST:event_cbTeamNameItemStateChanged
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        CoachEngine ce = new CoachEngine();
+        Coach c = new Coach();
+        
+        c.Coach(tfFirstName.getText(), tfLastName.getText(), tfAddress.getText(), Date.valueOf(tfDOB.getText()), tfNumber.getText(), String.valueOf(cbTeamName.getSelectedItem()));
+        
+        ce.updateCoach(c);
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        CoachEngine ce = new CoachEngine();
+        
+        ce.deleteCoach(String.valueOf(cbTeamName.getSelectedItem()));
+        
+        tfFirstName.setText("");
+        tfLastName.setText("");
+        tfAddress.setText("");
+        tfDOB.setText("");
+        tfNumber.setText("");
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    public static void setTeamNames(){
+        
+        BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
+        
+        String[] team = te.getTeamNames();
+        
+        for(int i = 0; i < team.length; i++){
+            
+           cbTeamName.addItem(team[i]);
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -179,6 +250,7 @@ public class Coaches extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Coaches().setVisible(true);
+                setTeamNames();
             }
         });
     }
@@ -187,7 +259,7 @@ public class Coaches extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbTeam;
+    private static javax.swing.JComboBox<String> cbTeamName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -195,9 +267,9 @@ public class Coaches extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField tfAddress;
-    private javax.swing.JTextField tfContactNumber;
     private javax.swing.JTextField tfDOB;
     private javax.swing.JTextField tfFirstName;
     private javax.swing.JTextField tfLastName;
+    private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
 }

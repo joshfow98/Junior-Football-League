@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Objects;
-import java.util.Date;
+import java.sql.Date;
 /**
  *
  * @author joshf
@@ -12,6 +12,7 @@ import java.util.Date;
 public class Player extends Coach{
     
     private String position;
+    private int playerID;
     
     public void Player(String firstName, String lastName, String address, Date dateOfBirth, String telephoneNumber, String team, String position){
         
@@ -24,6 +25,18 @@ public class Player extends Coach{
     public String getPosition(){
         
         return position;
+        
+    }
+    
+    public void setPlayerID(int playerID){
+        
+        this.playerID = playerID;
+        
+    }
+    
+    public int getPlayerID(){
+        
+        return  playerID;
         
     }
     

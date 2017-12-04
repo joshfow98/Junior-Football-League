@@ -5,6 +5,11 @@
  */
 package UI;
 
+import static UI.Teams.te;
+import BackEnd.PlayerEngine;
+import Objects.Player;
+import java.sql.Date;
+import javax.swing.JOptionPane;
 /**
  *
  * @author joshf
@@ -14,6 +19,7 @@ public class Players extends javax.swing.JFrame {
     /**
      * Creates new form Players
      */
+    private static Player p;
     public Players() {
         initComponents();
     }
@@ -27,13 +33,13 @@ public class Players extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cbTeam = new javax.swing.JComboBox<>();
-        cbLastName = new javax.swing.JComboBox<>();
+        cbTeamName = new javax.swing.JComboBox<>();
+        cbPlayerName = new javax.swing.JComboBox<>();
         tfLastName = new javax.swing.JTextField();
         tfPosition = new javax.swing.JTextField();
         tfAddress = new javax.swing.JTextField();
         tfDOB = new javax.swing.JTextField();
-        tfContactNumber = new javax.swing.JTextField();
+        tfNumber = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -49,13 +55,21 @@ public class Players extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cbTeam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTeamName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTeamNameItemStateChanged(evt);
+            }
+        });
 
-        cbLastName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPlayerName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbPlayerNameItemStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Team:");
 
-        jLabel2.setText("Last Name:");
+        jLabel2.setText("Name:");
 
         jLabel3.setText("Last Name:");
 
@@ -70,6 +84,11 @@ public class Players extends javax.swing.JFrame {
         jLabel8.setText("First Name:");
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -79,6 +98,11 @@ public class Players extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,8 +116,8 @@ public class Players extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbTeam, 0, 168, Short.MAX_VALUE)
-                            .addComponent(cbLastName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbTeamName, 0, 168, Short.MAX_VALUE)
+                            .addComponent(cbPlayerName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel6)
@@ -104,7 +128,7 @@ public class Players extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(tfFirstName)
                             .addComponent(tfLastName)
-                            .addComponent(tfContactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                            .addComponent(tfNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                             .addComponent(tfDOB)
                             .addComponent(tfPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
@@ -121,14 +145,14 @@ public class Players extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate))
                 .addGap(7, 7, 7)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbPlayerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnDelete)
@@ -153,7 +177,7 @@ public class Players extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,6 +196,115 @@ public class Players extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void cbTeamNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTeamNameItemStateChanged
+        
+        PlayerEngine pe = new PlayerEngine();
+        
+        tfFirstName.setText("");
+        tfLastName.setText("");
+        tfAddress.setText("");
+        tfDOB.setText("");
+        tfNumber.setText("");
+        tfPosition.setText("");
+        
+        cbPlayerName.removeAllItems();
+        
+        String[] playerNames = pe.getPlayerNames(String.valueOf(cbTeamName.getSelectedItem()));
+        
+        for(int i = 0; i < playerNames.length; i++){
+            
+            cbPlayerName.addItem(playerNames[i]);
+            
+        }
+        
+        
+    }//GEN-LAST:event_cbTeamNameItemStateChanged
+
+    private void cbPlayerNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPlayerNameItemStateChanged
+        
+        if(cbPlayerName.getItemCount() != 0){
+            
+            PlayerEngine pe = new PlayerEngine();
+        
+        
+            p = pe.getPlayer(String.valueOf(cbPlayerName.getSelectedItem()));
+        
+            tfFirstName.setText(p.getFirstName());
+            tfLastName.setText(p.getLastName());
+            tfAddress.setText(p.getAddress());
+            tfDOB.setText(String.valueOf(p.getDateOfBirth()));
+            tfNumber.setText(p.getTelephoneNumber());
+            tfPosition.setText(p.getPosition());
+            
+        }
+        
+    }//GEN-LAST:event_cbPlayerNameItemStateChanged
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        try{
+           
+            if(cbPlayerName.getItemCount() == 0){
+                
+                throw new BackEnd.NoPersonException("There is no player to update");
+                
+            }
+            
+            PlayerEngine pe = new PlayerEngine();
+        
+        
+            p.Player(tfFirstName.getText(), tfLastName.getText(), tfAddress.getText(), 
+                    Date.valueOf(tfDOB.getText()), tfNumber.getText(), 
+                    String.valueOf(cbTeamName.getSelectedItem()), tfPosition.getText());
+        
+            pe.updatePlayer(p);
+        
+        }catch (BackEnd.NoPersonException e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        try{
+           
+            if(cbPlayerName.getItemCount() == 0){
+                
+                throw new BackEnd.NoPersonException("There is no player to delete");
+                
+            }
+        
+            PlayerEngine pe = new PlayerEngine();
+            String playerIDString = cbPlayerName.getSelectedItem().toString();
+            int playerID = Integer.parseInt(playerIDString.substring(playerIDString.length() - 1));
+        
+            System.out.println(playerID);
+        
+            pe.deletePlayer(playerID);
+        
+        }catch (BackEnd.NoPersonException e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    public static void setTeamNames(){
+
+        String[] team = te.getTeamNames();
+        
+        for(int i = 0; i < team.length; i++){
+            
+            cbTeamName.addItem(team[i]);
+            
+        }
+ 
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -203,6 +336,7 @@ public class Players extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Players().setVisible(true);
+                setTeamNames();
             }
         });
     }
@@ -211,8 +345,8 @@ public class Players extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbLastName;
-    private javax.swing.JComboBox<String> cbTeam;
+    private javax.swing.JComboBox<String> cbPlayerName;
+    private static javax.swing.JComboBox<String> cbTeamName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -222,10 +356,10 @@ public class Players extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField tfAddress;
-    private javax.swing.JTextField tfContactNumber;
     private javax.swing.JTextField tfDOB;
     private javax.swing.JTextField tfFirstName;
     private javax.swing.JTextField tfLastName;
+    private javax.swing.JTextField tfNumber;
     private javax.swing.JTextField tfPosition;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,9 @@
  */
 package UI;
 
+import Objects.Player;
+import java.sql.Date;
+
 /**
  *
  * @author joshf
@@ -33,7 +36,6 @@ public class NewPlayer extends javax.swing.JFrame {
         tfDOB = new javax.swing.JTextField();
         tfNumber = new javax.swing.JTextField();
         tfPosition = new javax.swing.JTextField();
-        tfTeam = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,6 +46,7 @@ public class NewPlayer extends javax.swing.JFrame {
         btnAddPlayer = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        cbTeamName = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +54,7 @@ public class NewPlayer extends javax.swing.JFrame {
 
         jLabel2.setText("Address:");
 
-        jLabel3.setText("Date Of Birth:");
+        jLabel3.setText("Date Of Birth (mmmm-yy-dd):");
 
         jLabel4.setText("Contact Number:");
 
@@ -62,6 +65,11 @@ public class NewPlayer extends javax.swing.JFrame {
         jLabel7.setText("Last Name:");
 
         btnAddPlayer.setText("Add Player");
+        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPlayerActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
 
@@ -73,6 +81,12 @@ public class NewPlayer extends javax.swing.JFrame {
             }
         });
 
+        cbTeamName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTeamNameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,17 +94,6 @@ public class NewPlayer extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfDOB, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
-                            .addComponent(tfPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(tfTeam, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -109,7 +112,18 @@ public class NewPlayer extends javax.swing.JFrame {
                                     .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnClear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnAddPlayer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfDOB, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                            .addComponent(jLabel6)
+                            .addComponent(tfPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(cbTeamName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,9 +160,9 @@ public class NewPlayer extends javax.swing.JFrame {
                 .addComponent(tfPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbTeamName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -161,6 +175,33 @@ public class NewPlayer extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void cbTeamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTeamNameActionPerformed
+        
+        
+        
+    }//GEN-LAST:event_cbTeamNameActionPerformed
+
+    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
+        
+        BackEnd.NewPlayerEngine npe = new BackEnd.NewPlayerEngine();
+        Player p = new Player();
+        String firstName, lastName, address, telephoneNumber, team, position;
+        Date  DOB;
+        
+        firstName = tfFirstName.getText();
+        lastName = tfLastName.getText();
+        address = tfAddress.getText();
+        telephoneNumber = tfNumber.getText();
+        team = String.valueOf(cbTeamName.getSelectedItem());
+        position = tfPosition.getText();
+        DOB = Date.valueOf(tfDOB.getText());
+        
+        p.Player(firstName, lastName, address, DOB, telephoneNumber, team, position);
+        
+        npe.createNewPlayer(p);
+        
+    }//GEN-LAST:event_btnAddPlayerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,14 +234,31 @@ public class NewPlayer extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new NewPlayer().setVisible(true);
+                setTeamNames();
             }
         });
+    }
+ 
+    public static void setTeamNames(){
+        
+        BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
+        
+        String[] team = te.getTeamNames();
+        
+        for(int i = 0; i < team.length; i++){
+            
+           cbTeamName.addItem(team[i]);
+            
+        }
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPlayer;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnExit;
+    private static javax.swing.JComboBox<String> cbTeamName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -214,6 +272,5 @@ public class NewPlayer extends javax.swing.JFrame {
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfNumber;
     private javax.swing.JTextField tfPosition;
-    private javax.swing.JTextField tfTeam;
     // End of variables declaration//GEN-END:variables
 }

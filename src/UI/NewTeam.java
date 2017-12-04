@@ -5,6 +5,9 @@
  */
 package UI;
 
+import BackEnd.InputExceptions;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author joshf
@@ -114,12 +117,28 @@ public class NewTeam extends javax.swing.JFrame {
 
     private void btnAddTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTeamActionPerformed
         
-        BackEnd.NewTeamEngine nte = new BackEnd.NewTeamEngine();
+        try{
+            
+            if (tfTeamName.getText().equals("") || tfTeamCaptain.getText().equals("")){
+       
+                throw new InputExceptions("The team name or the team captain cannot be left blank");
+            
+            }else{
+            
+                BackEnd.NewTeamEngine nte = new BackEnd.NewTeamEngine();
         
-        nte.createTeam(tfTeamName.getText(), tfTeamCaptain.getText());
+                nte.createTeam(tfTeamName.getText(), tfTeamCaptain.getText());
         
-        tfTeamName.setText("");
-        tfTeamCaptain.setText("");
+                tfTeamName.setText("");
+                tfTeamCaptain.setText("");
+                
+            }
+            
+        }catch (InputExceptions e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
         
     }//GEN-LAST:event_btnAddTeamActionPerformed
 

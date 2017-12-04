@@ -5,6 +5,10 @@
  */
 package UI;
 
+import BackEnd.RefereeEngine;
+import Objects.Referee;
+import java.sql.Date;
+
 /**
  *
  * @author joshf
@@ -30,7 +34,7 @@ public class Referees extends javax.swing.JFrame {
         cbName = new javax.swing.JComboBox<>();
         tfAddress = new javax.swing.JTextField();
         tfDOB = new javax.swing.JTextField();
-        tfContactNumber = new javax.swing.JTextField();
+        tfNumber = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -41,7 +45,11 @@ public class Referees extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cbName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbName.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbNameItemStateChanged(evt);
+            }
+        });
 
         jLabel1.setText("Name:");
 
@@ -52,6 +60,11 @@ public class Referees extends javax.swing.JFrame {
         jLabel6.setText("Contact Number: ");
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +74,11 @@ public class Referees extends javax.swing.JFrame {
         });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,7 +93,7 @@ public class Referees extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addComponent(jLabel4)
                         .addComponent(jLabel5)
-                        .addComponent(tfContactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                        .addComponent(tfNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                         .addComponent(tfDOB))
                     .addComponent(tfAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
@@ -110,7 +128,7 @@ public class Referees extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfContactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tfNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -125,6 +143,54 @@ public class Referees extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        RefereeEngine re = new RefereeEngine();
+        Referee r = new Referee();
+        
+        r.Referee(null, null, tfAddress.getText(), Date.valueOf(tfDOB.getText()), tfNumber.getText());
+        re.updateReferee(String.valueOf(cbName.getSelectedItem()), r);
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void cbNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbNameItemStateChanged
+        
+        RefereeEngine re = new RefereeEngine();
+        Referee r = new Referee();
+        
+        r = re.getReferee(String.valueOf(cbName.getSelectedItem()));
+        
+        tfAddress.setText(r.getAddress());
+        tfDOB.setText(String.valueOf(r.getDateOfBirth()));
+        tfNumber.setText(r.getTelephoneNumber());
+    }//GEN-LAST:event_cbNameItemStateChanged
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        RefereeEngine re = new RefereeEngine();
+        
+        re.deleteReferee(String.valueOf(cbName.getSelectedItem()));
+        
+        int currentItem = cbName.getSelectedIndex();
+        
+        cbName.removeItemAt(currentItem);
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    public static void setRefereeNames(){
+        
+        RefereeEngine re = new RefereeEngine();
+        String[] refereeNames;
+        refereeNames = re.getRefereeNames();
+        
+        for(int i = 0; i < refereeNames.length; i++){
+            
+            cbName.addItem(refereeNames[i]);
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -163,6 +229,7 @@ public class Referees extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Referees().setVisible(true);
+                setRefereeNames();
             }
         });
     }
@@ -171,13 +238,13 @@ public class Referees extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cbName;
+    private static javax.swing.JComboBox<String> cbName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField tfAddress;
-    private javax.swing.JTextField tfContactNumber;
     private javax.swing.JTextField tfDOB;
+    private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
 }

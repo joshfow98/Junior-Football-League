@@ -5,6 +5,10 @@
  */
 package UI;
 
+import BackEnd.NewRefereeEngine;
+import Objects.Referee;
+import java.sql.Date;
+
 /**
  *
  * @author joshf
@@ -55,6 +59,11 @@ public class NewReferee extends javax.swing.JFrame {
 
         btnAddPlayer.setText("Add Referee");
         btnAddPlayer.setToolTipText("");
+        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPlayerActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
 
@@ -142,6 +151,23 @@ public class NewReferee extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
+        
+        NewRefereeEngine nre = new NewRefereeEngine();
+        Referee r = new Referee();
+        
+        r.Referee(tfFirstName.getText(), tfLastName.getText(), tfAddress.getText(), Date.valueOf(tfDOB.getText()), tfNumber.getText());
+        
+        nre.createNewReferee(r);
+        
+        tfFirstName.setText("");
+        tfLastName.setText("");
+        tfAddress.setText("");
+        tfDOB.setText("");
+        tfNumber.setText("");
+        
+    }//GEN-LAST:event_btnAddPlayerActionPerformed
 
     /**
      * @param args the command line arguments
