@@ -158,6 +158,9 @@ public class League extends javax.swing.JFrame {
     private static javax.swing.JTable tLeague;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Creates league table and outputs it.
+     */
     private static class ShowLeague{
         
         Connection con;

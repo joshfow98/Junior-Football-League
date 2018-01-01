@@ -287,6 +287,9 @@ public class NewManager extends javax.swing.JFrame {
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Creates a new manager record.
+     */
     private class NewManagerEngine {
     
     /**

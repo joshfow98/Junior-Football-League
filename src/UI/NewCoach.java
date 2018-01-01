@@ -283,6 +283,9 @@ public class NewCoach extends javax.swing.JFrame {
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Creates a new coach record.
+     */
     private class NewCoachEngine {
     
     /**

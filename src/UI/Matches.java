@@ -377,6 +377,9 @@ public class Matches extends javax.swing.JFrame {
     private javax.swing.JTextField tfHomeScore;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Retrieves, edits and deletes match records.
+     */
     private static class MatchesEngine {
     
     private Connection con;

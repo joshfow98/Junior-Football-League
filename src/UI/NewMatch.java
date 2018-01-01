@@ -267,6 +267,9 @@ public class NewMatch extends javax.swing.JFrame {
     private javax.swing.JTextField tfDate;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Creates a new match record.
+     */
 private class NewMatchEngine {
     /**
      * Creates a new match and stores it in the MATCHES table in the DB.

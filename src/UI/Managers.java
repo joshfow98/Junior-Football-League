@@ -304,6 +304,9 @@ public class Managers extends javax.swing.JFrame {
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Retrives, edits and deletes manager records.
+     */
 private class ManagerEngine {
     
     private Connection con;

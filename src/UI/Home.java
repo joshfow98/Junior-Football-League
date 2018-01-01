@@ -397,7 +397,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblJFL;
     // End of variables declaration//GEN-END:variables
-
+/**
+ * Returns the given message when the exception is thrown.
+ */
 public static class InputExceptions extends Exception{
     
     /**
@@ -411,7 +413,9 @@ public static class InputExceptions extends Exception{
     }
   
 }
-
+/**
+ * Returns the given message when the exception is thrown
+ */
 public static class NoPersonException extends Exception{
     
     /**

@@ -201,10 +201,10 @@ public class NewTeam extends javax.swing.JFrame {
     private javax.swing.JTextField tfTeamName;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Creates a new team record.
+     */
 private class NewTeamEngine {
-    
-    
-    
     /**
      * This method creates a new instance of the team class,
      * and outputs this to the database.

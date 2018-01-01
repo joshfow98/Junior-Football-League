@@ -324,8 +324,8 @@ public class NewPlayer extends javax.swing.JFrame {
 
     
 /**
+ *Creates a new player record.
  *
- * @author joshf
  */
 private class NewPlayerEngine {
     

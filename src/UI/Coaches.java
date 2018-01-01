@@ -293,7 +293,9 @@ public class Coaches extends javax.swing.JFrame {
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     * Retrieves, edits and deletes the coach records.
+     */
     private class CoachEngine {
     
     private Connection con;
