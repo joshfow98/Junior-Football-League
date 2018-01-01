@@ -5,8 +5,15 @@
  */
 package UI;
 
-import BackEnd.InputExceptions;
+import UI.Home.InputExceptions;
+import Objects.Team;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import Objects.Team;
 
 /**
  *
@@ -125,9 +132,9 @@ public class NewTeam extends javax.swing.JFrame {
             
             }else{
             
-                BackEnd.NewTeamEngine nte = new BackEnd.NewTeamEngine();
+                NewTeamEngine nte = new NewTeamEngine();
         
-                nte.createTeam(tfTeamName.getText(), tfTeamCaptain.getText());
+                nte.createNewTeam(tfTeamName.getText(), tfTeamCaptain.getText());
         
                 tfTeamName.setText("");
                 tfTeamCaptain.setText("");
@@ -193,4 +200,73 @@ public class NewTeam extends javax.swing.JFrame {
     private javax.swing.JTextField tfTeamCaptain;
     private javax.swing.JTextField tfTeamName;
     // End of variables declaration//GEN-END:variables
+
+private class NewTeamEngine {
+    
+    
+    
+    /**
+     * This method creates a new instance of the team class,
+     * and outputs this to the database.
+     * @param teamName
+     * @param teamCaptain 
+     */
+    public void createNewTeam(String teamName, String teamCaptain){
+        
+        Connection con;
+        Statement stmnt;
+        ResultSet rs;
+        String SQL;
+        Team team = new Team();
+        team.Team(teamName, teamCaptain);
+        
+         try{
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            
+            SQL = "SELECT * FROM JFL.TEAM";
+            
+            rs = stmnt.executeQuery(SQL);
+            
+            //checks if the team name has been used before and throws an 
+            //exception if it has been
+            while(rs.next()){
+
+                if(team.getTeamName().equals(rs.getString("team_name"))){
+                    
+                    rs.close();
+                    con.close();
+                    throw new InputExceptions("This team name has already been used");
+                    
+                }
+                
+            }
+            
+            rs.moveToInsertRow();
+
+            rs.updateString("team_name", team.getTeamName());
+            rs.updateString("captain", team.getTeamCaptain());
+            rs.updateInt("goals", 0);
+            rs.updateInt("points", 0);
+            rs.insertRow();
+
+            rs.close();
+            con.close();
+            
+        } catch (SQLException err){
+            
+            System.out.println(err.getMessage());
+            
+        } catch (InputExceptions e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
+
+    }
+    
+}
+
 }

@@ -5,9 +5,15 @@
  */
 package UI;
 
+import UI.Home.InputExceptions;
 import Objects.Player;
+import java.sql.Connection;
 import java.sql.Date;
-
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 /**
  *
  * @author joshf
@@ -54,7 +60,7 @@ public class NewPlayer extends javax.swing.JFrame {
 
         jLabel2.setText("Address:");
 
-        jLabel3.setText("Date Of Birth (mmmm-yy-dd):");
+        jLabel3.setText("Date Of Birth (yyyy-mm-dd):");
 
         jLabel4.setText("Contact Number:");
 
@@ -72,6 +78,11 @@ public class NewPlayer extends javax.swing.JFrame {
         });
 
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.setToolTipText("");
@@ -184,24 +195,59 @@ public class NewPlayer extends javax.swing.JFrame {
 
     private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
         
-        BackEnd.NewPlayerEngine npe = new BackEnd.NewPlayerEngine();
+        NewPlayerEngine npe = new NewPlayerEngine();
         Player p = new Player();
         String firstName, lastName, address, telephoneNumber, team, position;
-        Date  DOB;
+        java.sql.Date  DOB;
+        try{
+            
+            if(tfFirstName.getText().equals(null) || tfLastName.getText().equals("") || tfAddress.getText().equals("") || tfPosition.getText().equals("")
+                    || tfNumber.getText().equals("") || String.valueOf(cbTeamName.getSelectedItem()).equals("") || tfDOB.getText().equals("")){
+            
+            throw new InputExceptions("All fields must be completed");
+            
+            }
+
+            firstName = tfFirstName.getText();
+            lastName = tfLastName.getText();
+            address = tfAddress.getText();
+            telephoneNumber = tfNumber.getText();
+            team = String.valueOf(cbTeamName.getSelectedItem());
+            position = tfPosition.getText();
+            DOB = Date.valueOf(tfDOB.getText());
         
-        firstName = tfFirstName.getText();
-        lastName = tfLastName.getText();
-        address = tfAddress.getText();
-        telephoneNumber = tfNumber.getText();
-        team = String.valueOf(cbTeamName.getSelectedItem());
-        position = tfPosition.getText();
-        DOB = Date.valueOf(tfDOB.getText());
+            p.Player(firstName, lastName, address, DOB, telephoneNumber, team, position);
         
-        p.Player(firstName, lastName, address, DOB, telephoneNumber, team, position);
+            npe.createNewPlayer(p);
         
-        npe.createNewPlayer(p);
-        
+            tfFirstName.setText("");
+            tfLastName.setText("");
+            tfAddress.setText("");
+            tfDOB.setText("");
+            tfNumber.setText("");
+            tfPosition.setText("");
+            
+        }catch (InputExceptions e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }catch (IllegalArgumentException e){
+            
+            JOptionPane.showMessageDialog(null, "The date is incorrect");
+            
+        }
     }//GEN-LAST:event_btnAddPlayerActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        
+        tfFirstName.setText("");
+        tfLastName.setText("");
+        tfAddress.setText("");
+        tfDOB.setText("");
+        tfNumber.setText("");
+        tfPosition.setText("");
+        
+    }//GEN-LAST:event_btnClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,10 +284,12 @@ public class NewPlayer extends javax.swing.JFrame {
             }
         });
     }
- 
+    /**
+     * Adds all the team names to the combo box.
+     */
     public static void setTeamNames(){
         
-        BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
+        UI.Teams.TeamsEngine te = new UI.Teams.TeamsEngine();
         
         String[] team = te.getTeamNames();
         
@@ -273,4 +321,94 @@ public class NewPlayer extends javax.swing.JFrame {
     private javax.swing.JTextField tfNumber;
     private javax.swing.JTextField tfPosition;
     // End of variables declaration//GEN-END:variables
+
+    
+/**
+ *
+ * @author joshf
+ */
+private class NewPlayerEngine {
+    
+    private Player player;
+    private Connection con;
+    private Statement stmnt;
+    private ResultSet rs;
+    private String SQL;
+    
+    /**
+     * Adds a new player to the Player table in the JFL DB
+     * @param p 
+     */
+    public void createNewPlayer(Player p){
+        
+        try{
+            
+            if(p.getAddress().equals("") || p.getDateOfBirth().equals("") || p.getFirstName().equals("") ||
+                    p.getLastName().equals("") || p.getPosition().equals("") || p.getTeam().equals("") ||
+                    p.getTelephoneNumber().equals("")){
+                
+                throw new InputExceptions("You cannot have empty fields");
+                
+            }
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            
+            SQL = "SELECT * FROM JFL.PLAYER";
+            
+            rs = stmnt.executeQuery(SQL);
+            
+            
+            int i = 0, teamPlayers = 0;
+            
+            while(rs.next()){
+                
+                i = rs.getInt("player_id") + 1;
+                
+                if(rs.getString("team_name").equals(p.getTeam())){
+                    
+                    teamPlayers++;
+                    
+                }
+                if(teamPlayers == 13){
+                    
+                    throw new InputExceptions("This team is already at capacity");
+                    
+                }
+                
+            }
+            
+            rs.moveToInsertRow();
+            
+            rs.updateInt("player_id", i);
+            rs.updateString("first_name", p.getFirstName());
+            rs.updateString("last_name", p.getLastName());
+            rs.updateString("address", p.getAddress());
+            rs.updateDate("date_of_birth", (Date) p.getDateOfBirth());
+            rs.updateString("telephone_number", p.getTelephoneNumber());
+            rs.updateString("position", p.getPosition());
+            rs.updateString("team_name", p.getTeam());
+            
+            rs.insertRow();
+            
+            rs.close();
+            con.close();
+            
+        } catch (SQLException err){
+            
+            System.out.println(err.getMessage());
+            
+        } catch (InputExceptions e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
+        
+    }
+    
+}
+
+    
 }

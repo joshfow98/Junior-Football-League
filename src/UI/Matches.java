@@ -5,12 +5,25 @@
  */
 package UI;
 
+import UI.Home.NoPersonException;
+import java.sql.Date;
+import Objects.Match;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
 /**
  *
  * @author joshf
  */
 public class Matches extends javax.swing.JFrame {
 
+    static MatchesEngine me = new MatchesEngine();
+    private Match[] m;
+    
     /**
      * Creates new form Players
      */
@@ -27,23 +40,21 @@ public class Matches extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cbMatchDate = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        cbHomeTeam = new javax.swing.JComboBox<>();
+        cbAwayTeam = new javax.swing.JComboBox<>();
         cbReferee = new javax.swing.JComboBox<>();
         tfHomeScore = new javax.swing.JTextField();
         tfAwayScore = new javax.swing.JTextField();
-        cbResult = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        cbHomeTeam1 = new javax.swing.JComboBox<>();
+        cbDates = new javax.swing.JComboBox<>();
+        cbHomeTeam = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +63,11 @@ public class Matches extends javax.swing.JFrame {
         jLabel4.setText("Home Team:");
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -62,8 +78,6 @@ public class Matches extends javax.swing.JFrame {
 
         btnDelete.setText("Delete");
 
-        cbResult.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Draw", "Home Win", "Away Win" }));
-
         jLabel2.setText("Away Team:");
 
         jLabel3.setText("Referee:");
@@ -72,7 +86,17 @@ public class Matches extends javax.swing.JFrame {
 
         jLabel6.setText("Away Team Score:");
 
-        jLabel7.setText("Result:");
+        cbDates.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbDatesItemStateChanged(evt);
+            }
+        });
+
+        cbHomeTeam.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbHomeTeamItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,22 +109,19 @@ public class Matches extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cbResult, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6)
                             .addComponent(tfHomeScore, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfAwayScore, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cbReferee, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbMatchDate, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE)
+                            .addComponent(cbReferee, javax.swing.GroupLayout.Alignment.LEADING, 0, 168, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbHomeTeam, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbAwayTeam, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbHomeTeam1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbDates, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbHomeTeam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -115,14 +136,14 @@ public class Matches extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbMatchDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate))
+                    .addComponent(btnUpdate)
+                    .addComponent(cbDates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDelete)
-                    .addComponent(cbHomeTeam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbHomeTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -131,7 +152,7 @@ public class Matches extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbHomeTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbAwayTeam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -144,11 +165,7 @@ public class Matches extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfAwayScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,6 +179,99 @@ public class Matches extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void cbDatesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDatesItemStateChanged
+        
+        cbHomeTeam.removeAllItems();
+        String date = String.valueOf(cbDates.getSelectedItem());
+        String[] ht;
+        
+        ht = me.getHomeTeam(Date.valueOf(date));
+        
+        for(int i = 0; i < ht.length; i++){
+            
+            cbHomeTeam.addItem(ht[i]);
+            
+        }
+        
+    }//GEN-LAST:event_cbDatesItemStateChanged
+
+    private void cbHomeTeamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbHomeTeamItemStateChanged
+        
+        if(cbHomeTeam.getSelectedIndex() > -1){
+            
+            cbAwayTeam.removeAllItems();
+            cbReferee.removeAllItems();
+            
+            String homeTeam = String.valueOf(cbHomeTeam.getSelectedItem());
+            Date date;
+            date = Date.valueOf(String.valueOf(cbDates.getSelectedItem()));
+        
+            Match m = me.getMatch(homeTeam, date);
+        
+            cbAwayTeam.addItem(m.getAwayTeam());
+            String pickedTeam = String.valueOf(cbAwayTeam.getSelectedItem());
+            
+            setTeamNames(pickedTeam, homeTeam);
+            
+            String refereeID = me.getRefereeName(m.getReferee());
+            cbReferee.addItem(refereeID);
+            setRefereeNames();
+            tfHomeScore.setText(String.valueOf(m.getHomeTeamScore()));
+            tfAwayScore.setText(String.valueOf(m.getAwayTeamScore()));
+        
+        }
+        
+    }//GEN-LAST:event_cbHomeTeamItemStateChanged
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        UI.Referees.RefereeEngine re = new UI.Referees.RefereeEngine();
+        int refereeID;
+        String result;
+        
+        if(Integer.parseInt(tfHomeScore.getText()) == Integer.parseInt(tfAwayScore.getText())){
+            
+            result = "Draw";
+            
+        }else if (Integer.parseInt(tfHomeScore.getText()) > Integer.parseInt(tfAwayScore.getText())){
+            
+            result = "Win";
+            
+        }else{
+            
+            result = "Loss";
+            
+        }
+        refereeID = re.getRefereeID(String.valueOf(cbReferee.getSelectedItem()));
+        
+        Match m = new Match(String.valueOf(cbHomeTeam.getSelectedItem()), String.valueOf(cbAwayTeam.getSelectedItem()), 
+                            Date.valueOf(String.valueOf(cbDates.getSelectedItem())), refereeID, 
+                            Integer.parseInt(tfHomeScore.getText()), Integer.parseInt(tfAwayScore.getText()), result);
+        
+        me.updateMatch(m);
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+    /**
+     * Adds all the referees to the combo box.
+     */
+    public static void setRefereeNames(){
+        
+        UI.Referees.RefereeEngine re = new UI.Referees.RefereeEngine();
+        
+        String[] referee = re.getRefereeNames();
+        
+        for(int i = 0; i < referee.length; i++){
+            
+            if(!String.valueOf(cbReferee.getSelectedItem()).equals(referee[i])){
+            
+                cbReferee.addItem(referee[i]);
+                
+            }
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -208,27 +318,294 @@ public class Matches extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Matches().setVisible(true);
+                setMatchDates();
             }
         });
     }
-
+    /**
+     * Adds all teams names to the combo box other than the currently picked away team and the home team.
+     * @param pickedTeam
+     * @param homeTeam 
+     */
+    private static void setTeamNames(String pickedTeam, String homeTeam){
+        
+        UI.Teams.TeamsEngine te = new UI.Teams.TeamsEngine();
+        
+        String[] team = te.getTeamNames();
+        
+        for(int i = 0; i < team.length; i++){
+            
+           if(!pickedTeam.equals(team[i]) & !homeTeam.equals(team[i])){
+               
+            cbAwayTeam.addItem(team[i]);
+           
+           } 
+        }
+        
+        
+    }
+    /**
+     * Adds all the dates used for matched found in the DB to the combo box.
+     */
+    public static void setMatchDates(){
+        
+        Date[] d;
+        d = me.getDates();
+        for(int i = 0; i < d.length; i++){
+            
+            cbDates.addItem(String.valueOf(d[i]));
+            
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnUpdate;
+    private static javax.swing.JComboBox<String> cbAwayTeam;
+    private static javax.swing.JComboBox<String> cbDates;
     private javax.swing.JComboBox<String> cbHomeTeam;
-    private javax.swing.JComboBox<String> cbHomeTeam1;
-    private javax.swing.JComboBox<String> cbMatchDate;
-    private javax.swing.JComboBox<String> cbReferee;
-    private javax.swing.JComboBox<String> cbResult;
+    private static javax.swing.JComboBox<String> cbReferee;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField tfAwayScore;
     private javax.swing.JTextField tfHomeScore;
     // End of variables declaration//GEN-END:variables
+
+    private static class MatchesEngine {
+    
+    private Connection con;
+    private Statement stmnt;
+    private ResultSet rs;
+    private String SQL;
+    /**
+     * Gets the dates that matches are being played.
+     * @return 
+     */
+    public Date[] getDates(){
+        
+        Date[] d = new Date[0];
+        int i = 0, firstTime = 0;
+        boolean dateUsed = false;
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.MATCHES";
+            rs = stmnt.executeQuery(SQL);
+            
+            if(rs.next() == false){
+                
+                throw new NoPersonException("There are no matches yet");
+                
+            }
+            
+            rs.beforeFirst();
+            
+            while(rs.next()){
+                
+                if(i > 0){
+                    
+                    for(int i2 = 0; i2 < d.length; i2++){
+                        
+                       if(rs.getDate("match_date").equals(d[i2])){
+                           
+                           dateUsed = true;
+                           
+                           
+                       }
+                        
+                    }
+                    
+                    if(dateUsed == false){
+                        
+                        d = Arrays.copyOf(d, d.length + 1);
+                        d[i] = rs.getDate("match_date");
+                        i++;
+                        
+                    }
+                    
+                }else{
+                    
+                   d = Arrays.copyOf(d, d.length + 1);
+                   d[i] = rs.getDate("match_date");
+                   i++; 
+                    
+                }
+                
+            }
+           
+            rs.close();
+            stmnt.close();
+            con.close();
+            
+        } catch (NoPersonException e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }catch (SQLException err){
+            
+            System.out.println(err.getMessage());
+            
+        }
+        
+        return d;
+        
+    }
+    /**
+     * returns all home teams that play on the selected match date.
+     * @param d
+     * @return 
+     */
+    public String[] getHomeTeam(Date d){
+        
+        Match[] m = new Match[0];
+        String[] ht = new String[0];
+        int i = 0;
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.MATCHES WHERE match_date = '" + d + "'";
+            rs = stmnt.executeQuery(SQL);
+           
+            while(rs.next()){
+            
+                ht = Arrays.copyOf(ht, ht.length + 1);
+                ht[i] = rs.getString("home_team");
+                
+                i++;
+               
+            }
+            
+            rs.close();
+            stmnt.close();
+            con.close();
+            
+        }catch (SQLException err){
+            
+            System.out.println(err.getMessage());
+            
+        }
+        
+        return ht;
+        
+    }
+    /**
+     * returns the match details of the match played on the given date against the given home team.
+     * @param homeTeam
+     * @param date
+     * @return 
+     */
+    public Match getMatch(String homeTeam, Date date){
+        
+        Match m = new Match(null, null,null, 0, 0, 0, null);
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.MATCHES WHERE match_date = '" + date + "' AND home_team = '" + homeTeam + "'";
+            rs = stmnt.executeQuery(SQL);
+        
+            rs.next();
+            m = new Match(rs.getString("home_team"), rs.getString("away_team"), rs.getDate("match_date"), rs.getInt("referee_id"),
+                          rs.getInt("home_team_score"), rs.getInt("away_team_score"), rs.getString("result"));
+
+            rs.close();
+            stmnt.close();
+            
+        }catch (SQLException e){
+                   
+            System.out.println(e.getMessage());
+            
+        }
+        
+        return m;
+        
+    }
+    /**
+     * Retrieves the full name of the referee, using the referee ID.
+     * @param id
+     * @return 
+     */
+    public String getRefereeName(int id){
+        
+        String refereeID = "";
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.REFEREE WHERE referee_id =" + id;
+            rs = stmnt.executeQuery(SQL);
+        
+            rs.next();
+        
+            refereeID = rs.getString("first_name") + " " + rs.getString("last_name") + " " + id;
+            
+            rs.close();
+            stmnt.close();
+            
+        }catch (SQLException e){
+            
+            System.out.println(e.getMessage());
+            
+        }
+        
+        return refereeID;
+        
+    }
+    /**
+     * updates the match details of the currently selected match.
+     * @param m 
+     */
+    public void updateMatch(Match m){
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.MATCHES WHERE match_date = '" + m.getMatchDate() + "' AND home_team = '" + m.getHomeTeam() + "'";
+            rs = stmnt.executeQuery(SQL);
+        
+            rs.next();
+            rs.updateString("away_team", m.getAwayTeam());
+            rs.updateInt("referee_id", m.getReferee());
+            rs.updateInt("home_team_score", m.getHomeTeamScore());
+            rs.updateInt("away_team_score", m.getAwayTeamScore());
+            rs.updateString("result", m.getResult());
+            
+            rs.updateRow();
+            
+            rs.close();
+            stmnt.close();
+            
+        }catch (SQLException e){
+            
+            System.out.println(e.getMessage());
+            
+        }
+        
+    }
+ 
+}
+
 }

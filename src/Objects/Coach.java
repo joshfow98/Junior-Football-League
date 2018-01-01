@@ -12,7 +12,15 @@ import java.sql.Date;
 public class Coach extends Person{
     
     private String team;
-    
+    /**
+     * Stores the details for the instance of the coach class.
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param dateOfBirth
+     * @param telephoneNumber
+     * @param team 
+     */
     public void Coach(String firstName, String lastName, String address, Date dateOfBirth, String telephoneNumber, String team){
         
         super.Person(firstName, lastName, address, dateOfBirth, telephoneNumber);
@@ -20,7 +28,10 @@ public class Coach extends Person{
         this.team = team;
         
     }
-    
+    /**
+     * Returns the team the coach coaches.
+     * @return 
+     */
     public String getTeam(){
         
         return team;

@@ -5,9 +5,14 @@
  */
 package UI;
 
+import UI.Home.InputExceptions;
 import Objects.Coach;
 import java.sql.Date;
-import BackEnd.NewCoachEngine;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,7 +58,7 @@ public class NewCoach extends javax.swing.JFrame {
 
         jLabel2.setText("Address:");
 
-        jLabel3.setText("Date Of Birth:");
+        jLabel3.setText("Date Of Birth (yyyy-mm-dd):");
 
         jLabel4.setText("Contact Number:");
 
@@ -189,10 +194,12 @@ public class NewCoach extends javax.swing.JFrame {
         tfNumber.setText("");
         
     }//GEN-LAST:event_btnAddPlayerActionPerformed
-
+    /**
+     * Adds all the team names to the combo box.
+     */
     public static void setTeamNames(){
         
-        BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
+        UI.Teams.TeamsEngine te = new UI.Teams.TeamsEngine();
         
         String[] team = te.getTeamNames();
         
@@ -275,4 +282,69 @@ public class NewCoach extends javax.swing.JFrame {
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
+
+    private class NewCoachEngine {
+    
+    /**
+     * This adds a new coach to the Coach table in the JFL DB.
+     * @param c 
+     */
+    public void createNewCoach(Coach c){
+        
+        
+        Connection con;
+        Statement stmnt;
+        ResultSet rs;
+        String SQL;
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            
+            SQL = "SELECT * FROM JFL.COACH";
+            
+            rs = stmnt.executeQuery(SQL);
+            
+            int i = 0;
+            while(rs.next()){
+                
+                if(rs.getString("team_name").equals(c.getTeam())){
+                    
+                    rs.close();
+                    con.close();
+                    throw new InputExceptions("This team already has a coach");
+                    
+                }
+                
+                i = rs.getInt("coach_id") + 1;
+                
+            }
+            
+            rs.moveToInsertRow();
+            
+            rs.updateInt("coach_id", i);
+            rs.updateString("first_name", c.getFirstName());
+            rs.updateString("last_name", c.getLastName());
+            rs.updateString("address", c.getAddress());
+            rs.updateDate("date_of_birth", (Date) c.getDateOfBirth());
+            rs.updateString("telephone_number", c.getTelephoneNumber());
+            rs.updateString("team_name", c.getTeam());
+            
+            rs.insertRow();
+            
+            rs.close();
+            con.close();
+            
+        } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
+        
+    }
+
+}
 }

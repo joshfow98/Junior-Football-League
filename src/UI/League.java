@@ -5,6 +5,17 @@
  */
 package UI;
 
+import Objects.Match;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Arrays;
+import Objects.Team;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author joshf
@@ -27,15 +38,11 @@ public class League extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        taLeague = new javax.swing.JTextArea();
         btnExit = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tLeague = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        taLeague.setColumns(20);
-        taLeague.setRows(5);
-        jScrollPane1.setViewportView(taLeague);
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -44,25 +51,46 @@ public class League extends javax.swing.JFrame {
             }
         });
 
+        tLeague.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Team", "Points", "Goals"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tLeague);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(btnExit)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnExit)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btnExit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,13 +135,182 @@ public class League extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new League().setVisible(true);
+                ShowLeague sl = new ShowLeague();
+                sl.ShowLeague();
             }
         });
+        
     }
-
+    /**
+     * Calls the ShowLeague class to retrieves teams and matches and put them in a league order.
+     */
+    public void showLeague(){
+        
+        ShowLeague sl = new ShowLeague();
+        sl.ShowLeague();
+        
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea taLeague;
+    private javax.swing.JScrollPane jScrollPane2;
+    private static javax.swing.JTable tLeague;
     // End of variables declaration//GEN-END:variables
+
+    private static class ShowLeague{
+        
+        Connection con;
+        Statement stmnt;
+        ResultSet rs;
+        String SQL;
+        Team[] teams = new Team[0];
+        int i = 0; 
+        /**
+         * Retrieves all teams and matches from DB and puts the team into order from top of the
+         *league to bottom, and outputs this to the table.
+         */
+        public void ShowLeague(){
+            try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.TEAM";
+            rs = stmnt.executeQuery(SQL);
+        
+            while(rs.next()){
+                
+                teams = Arrays.copyOf(teams, teams.length + 1);
+                
+                teams[i] = new Team();
+                
+                teams[i].setTeamName(rs.getString("team_name"));
+                
+                i++;
+                
+            }
+
+            rs.close();
+            stmnt.close();
+            
+        }catch (SQLException e){
+                   
+            System.out.println(e.getMessage());
+            
+        }
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            SQL = "SELECT * FROM JFL.MATCHES";
+            rs = stmnt.executeQuery(SQL);
+        
+            int tempGoals = 0, tempPoints = 0;
+            
+            while(rs.next()){
+                
+                for(i = 0; i < teams.length; i++){
+                        
+                    tempPoints = teams[i].getPoints();
+                    tempGoals = teams[i].getGoals();
+                    
+                        if(rs.getString("home_team").equals(teams[i].getTeamName())){
+                            
+                            
+                            if(rs.getString("result").equals("Win")){
+                                //System.out.println(teams[i].getTeamName());
+                                teams[i].setPoints(tempPoints + 3);
+                                
+                            }else if (rs.getString("result") == "Draw"){
+                                System.out.println(teams[i].getTeamName());
+                                teams[i].setPoints(tempPoints + 1);
+                                
+                            }
+                            //System.out.println(teams[i].getTeamName());
+                            teams[i].setGoals(teams[i].getGoals() + rs.getInt("home_team_score"));
+                        
+                        }else if (rs.getString("away_team").equals(teams[i].getTeamName())){
+                        
+                            if(rs.getString("result").equals("Loss")){
+                    
+                                teams[i].setPoints(tempPoints + 3);
+                                
+                    
+                            }else if (rs.getString("result") == "Draw"){
+                                
+                                teams[i].setPoints(tempPoints + 1);
+                                
+                            }
+                        
+                            teams[i].setGoals(tempGoals + rs.getInt("away_team_score"));
+                            
+                        }
+                        
+                }
+                
+            }
+            
+            Team[] teamsTemp = new Team[teams.length];
+            Team tempTeam;
+            int i3 = 0, passes = 1;
+            
+            while(passes > 0){
+                
+                passes = 0;
+                
+                for(i = 0; i < teams.length; i++){
+                    
+                    if(i + 1 != teams.length){
+                        
+                        if(teams[i].getPoints() < teams[i + 1].getPoints()){
+                            
+                            tempTeam = teams[i];
+                            teams[i] = teams[i + 1];
+                            teams[i + 1] = tempTeam;
+                            passes += 1;
+                            
+                        }else if(teams[i].getPoints() == teams[i + 1].getPoints()){
+                            
+                            if(teams[i].getGoals() < teams[i + 1].getGoals()){
+                                
+                                tempTeam = teams[i];
+                                teams[i] = teams[i + 1];
+                                teams[i + 1] = tempTeam;
+                                passes += 1;
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            DefaultTableModel model = (DefaultTableModel) tLeague.getModel();
+            
+            for (i = 0; i < teams.length; i++){
+                
+                Object[] data = {teams[i].getTeamName(), teams[i].getPoints(), teams[i].getGoals()};
+                
+                model.addRow(data);
+                
+            }
+
+            rs.close();
+            stmnt.close();
+            
+        }catch (SQLException e){
+                   
+            System.out.println(e.getMessage());
+            
+        }
+        }   
+    }
 }

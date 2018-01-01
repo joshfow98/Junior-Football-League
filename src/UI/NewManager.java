@@ -5,9 +5,14 @@
  */
 package UI;
 
+import UI.Home.InputExceptions;
 import Objects.Manager;
 import java.sql.Date;
-import BackEnd.NewManagerEngine;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,7 +58,7 @@ public class NewManager extends javax.swing.JFrame {
 
         jLabel2.setText("Address:");
 
-        jLabel3.setText("Date Of Birth:");
+        jLabel3.setText("Date Of Birth (yyyy-mm-dd):");
 
         jLabel4.setText("Contact Number:");
 
@@ -61,7 +66,7 @@ public class NewManager extends javax.swing.JFrame {
 
         jLabel7.setText("Last Name:");
 
-        btnAddPlayer.setText("Add Coach");
+        btnAddPlayer.setText("Add Manager");
         btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddPlayerActionPerformed(evt);
@@ -189,10 +194,12 @@ public class NewManager extends javax.swing.JFrame {
         tfNumber.setText("");
         
     }//GEN-LAST:event_btnAddPlayerActionPerformed
-
+    /**
+     * Adds all the team names to the combo box.
+     */
     public static void setTeamNames(){
         
-        BackEnd.TeamsEngine te = new BackEnd.TeamsEngine();
+        UI.Teams.TeamsEngine te = new UI.Teams.TeamsEngine();
         
         String[] team = te.getTeamNames();
         
@@ -279,4 +286,70 @@ public class NewManager extends javax.swing.JFrame {
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
+
+    private class NewManagerEngine {
+    
+    /**
+     * This adds a new manager to the Manager table in the JFL DB.
+     * @param m 
+     */
+    public void createNewManager(Manager m){
+        
+        
+        Connection con;
+        Statement stmnt;
+        ResultSet rs;
+        String SQL;
+        
+        try{
+            
+            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+            con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            
+            SQL = "SELECT * FROM JFL.MANAGER";
+            
+            rs = stmnt.executeQuery(SQL);
+            
+            int i = 0;
+            while(rs.next()){
+                
+                if(rs.getString("team_name").equals(m.getTeam())){
+                    
+                    throw new InputExceptions("This team already has a manager");
+                    
+                }
+                
+                i = rs.getInt("manager_id") + 1;
+                
+            }
+            
+            rs.moveToInsertRow();
+            
+            rs.updateInt("manager_id", i);
+            rs.updateString("first_name", m.getFirstName());
+            rs.updateString("last_name", m.getLastName());
+            rs.updateString("address", m.getAddress());
+            rs.updateDate("date_of_birth", (Date) m.getDateOfBirth());
+            rs.updateString("telephone_number", m.getTelephoneNumber());
+            rs.updateString("team_name", m.getTeam());
+            
+            rs.insertRow();
+            
+            rs.close();
+            con.close();
+            
+        } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            
+        }
+        
+    }
+    
+    
+    
+}
+    
 }

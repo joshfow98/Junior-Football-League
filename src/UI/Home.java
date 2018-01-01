@@ -242,6 +242,8 @@ public class Home extends javax.swing.JFrame {
         
         NewMatch n = new NewMatch();
         n.setVisible(true);
+        n.setTeamNames();
+        n.setRefereeNames();
         this.dispose();
         
     }//GEN-LAST:event_btnNewMatchActionPerformed
@@ -293,6 +295,7 @@ public class Home extends javax.swing.JFrame {
         
         Matches n = new Matches();
         n.setVisible(true);
+        n.setMatchDates();
         this.dispose();
     }//GEN-LAST:event_btnMatchesActionPerformed
 
@@ -336,6 +339,7 @@ public class Home extends javax.swing.JFrame {
         
         League n = new League();
         n.setVisible(true);
+        n.showLeague();
         this.dispose();
         
     }//GEN-LAST:event_btnLeagueActionPerformed
@@ -393,4 +397,32 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblJFL;
     // End of variables declaration//GEN-END:variables
+
+public static class InputExceptions extends Exception{
+    
+    /**
+     * Output the given message.
+     * @param message 
+     */
+    public InputExceptions(String message){
+        
+        super(message);
+        
+    }
+  
+}
+
+public static class NoPersonException extends Exception{
+    
+    /**
+     * Returns message given in the parameter.
+     * @param message 
+     */
+    public NoPersonException(String message){
+        
+        super(message);
+        
+    }
+    
+}
 }
