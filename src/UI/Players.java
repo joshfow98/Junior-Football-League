@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 /**
- *
+ * UI to update player records.
  * @author joshf
  */
 public class Players extends javax.swing.JFrame {
@@ -378,7 +378,7 @@ public class Players extends javax.swing.JFrame {
     /**
      * Retrieves, edits and deletes player records.
      */
-    private class PlayerEngine {
+    protected static class PlayerEngine {
     
     private Connection con;
     private Statement stmnt;

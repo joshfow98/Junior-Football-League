@@ -16,7 +16,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 /**
- *
+ * UI to update match records.
  * @author joshf
  */
 public class Matches extends javax.swing.JFrame {
@@ -380,7 +380,7 @@ public class Matches extends javax.swing.JFrame {
     /**
      * Retrieves, edits and deletes match records.
      */
-    private static class MatchesEngine {
+    protected static class MatchesEngine {
     
     private Connection con;
     private Statement stmnt;

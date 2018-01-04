@@ -15,7 +15,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * UI to create manager records.
  * @author joshf
  */
 public class NewManager extends javax.swing.JFrame {
@@ -290,7 +290,7 @@ public class NewManager extends javax.swing.JFrame {
     /**
      * Creates a new manager record.
      */
-    private class NewManagerEngine {
+    protected static class NewManagerEngine {
     
     /**
      * This adds a new manager to the Manager table in the JFL DB.

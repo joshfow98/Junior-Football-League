@@ -14,7 +14,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * UI to create referee records.
  * @author joshf
  */
 public class NewReferee extends javax.swing.JFrame {
@@ -234,7 +234,7 @@ public class NewReferee extends javax.swing.JFrame {
     /**
      * Creates a new referee record.
      */
-    private class NewRefereeEngine {
+    protected static class NewRefereeEngine {
     
     /**
      * This adds a new referee to the Referee table in the JFL DB.

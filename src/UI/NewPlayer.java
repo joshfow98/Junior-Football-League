@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 /**
- *
+ * UI to create player records.
  * @author joshf
  */
 public class NewPlayer extends javax.swing.JFrame {
@@ -327,7 +327,7 @@ public class NewPlayer extends javax.swing.JFrame {
  *Creates a new player record.
  *
  */
-private class NewPlayerEngine {
+protected static class NewPlayerEngine {
     
     private Player player;
     private Connection con;

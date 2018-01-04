@@ -15,7 +15,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * UI to create coach records.
  * @author joshf
  */
 public class NewCoach extends javax.swing.JFrame {
@@ -286,7 +286,7 @@ public class NewCoach extends javax.swing.JFrame {
     /**
      * Creates a new coach record.
      */
-    private class NewCoachEngine {
+    protected static class NewCoachEngine {
     
     /**
      * This adds a new coach to the Coach table in the JFL DB.

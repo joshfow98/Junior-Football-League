@@ -6,7 +6,7 @@
 package Objects;
 import java.sql.Date;
 /**
- *
+ * Stores/returns details about a team manager.
  * @author joshf
  */
 public class Manager extends Coach{

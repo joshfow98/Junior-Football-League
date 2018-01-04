@@ -17,7 +17,7 @@ import Objects.Team;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * UI to output league table.
  * @author joshf
  */
 public class League extends javax.swing.JFrame {
@@ -161,7 +161,7 @@ public class League extends javax.swing.JFrame {
     /**
      * Creates league table and outputs it.
      */
-    private static class ShowLeague{
+    protected static class ShowLeague{
         
         Connection con;
         Statement stmnt;

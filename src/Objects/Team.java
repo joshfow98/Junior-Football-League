@@ -6,7 +6,7 @@
 package Objects;
 
 /**
- *
+ * Stores/returns details about a team.
  * @author joshf
  */
 public class Team {

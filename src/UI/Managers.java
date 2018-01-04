@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 /**
- *
+ * UI to update manager records.
  * @author joshf
  */
 public class Managers extends javax.swing.JFrame {
@@ -307,7 +307,7 @@ public class Managers extends javax.swing.JFrame {
     /**
      * Retrives, edits and deletes manager records.
      */
-private class ManagerEngine {
+protected static class ManagerEngine {
     
     private Connection con;
     private Statement stmnt;

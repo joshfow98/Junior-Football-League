@@ -6,7 +6,7 @@
 package UI;
 
 /**
- *
+ * UI for home screen.
  * @author joshf
  */
 public class Home extends javax.swing.JFrame {
@@ -400,7 +400,7 @@ public class Home extends javax.swing.JFrame {
 /**
  * Returns the given message when the exception is thrown.
  */
-public static class InputExceptions extends Exception{
+protected static class InputExceptions extends Exception{
     
     /**
      * Output the given message.
@@ -416,7 +416,7 @@ public static class InputExceptions extends Exception{
 /**
  * Returns the given message when the exception is thrown
  */
-public static class NoPersonException extends Exception{
+protected static class NoPersonException extends Exception{
     
     /**
      * Returns message given in the parameter.

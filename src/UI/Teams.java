@@ -16,9 +16,7 @@ import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
- * This class provides a UI for the user find currently
- * store teams in the JFL database, retrieve their details, update and 
- * even delete them.
+ * UI to update team records.
  * @author joshf
  */
 public class Teams extends javax.swing.JFrame {

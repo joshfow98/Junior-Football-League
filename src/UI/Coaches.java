@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 /**
- *
+ * UI to update coach records.
  * @author joshf
  */
 public class Coaches extends javax.swing.JFrame {
@@ -293,123 +293,123 @@ public class Coaches extends javax.swing.JFrame {
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfNumber;
     // End of variables declaration//GEN-END:variables
-    /**
-     * Retrieves, edits and deletes the coach records.
-     */
-    private class CoachEngine {
-    
-    private Connection con;
-    private Statement stmnt;
-    private ResultSet rs;
-    private String SQL;
-    /**
-     * Retrieves the selected team coach.
-     * @param teamName
-     * @return 
-     */
-    public Coach getCoach(String teamName){
-        
-        Coach c = new Coach();
-        
-        try{
-            
-            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
-            con = DriverManager.getConnection(host, uName, uPass);
-            
-            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            SQL = "SELECT * FROM JFL.COACH WHERE team_name = '" + teamName + "'";
-            rs = stmnt.executeQuery(SQL);
-            
-            if(!rs.next()){
-                
-                //c.Coach("", "", "", null, "", "");
-                throw new UI.Home.NoPersonException("No team coach");
-                
-            }
-            c.Coach(rs.getString("first_name"), rs.getString("last_name"), rs.getString("address"), 
-                    rs.getDate("date_of_birth"), rs.getString("telephone_number"), rs.getString("team_name"));
+/**
+ * Retrieves, edits and deletes coach records.
+ */
+protected static class CoachEngine {
 
-            rs.close();
-            stmnt.close();
-            con.close();
-            
-        } catch(NoPersonException e){
-            
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            
-        }catch (SQLException err){
-            
-            System.out.println(err.getMessage());
-            
-        }
-        
-        return c;
-        
-    }
-    /**
-     * Updates the details of the selected team coach.
-     * @param c 
-     */
-    public void updateCoach(Coach c){
-        
-        try{
-            
-            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
-            con = DriverManager.getConnection(host, uName, uPass);
-            
-            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            SQL = "SELECT * FROM JFL.COACH WHERE team_name = '" + c.getTeam() + "'";
-            rs = stmnt.executeQuery(SQL);
-            rs.next();
-            
-            rs.updateString("first_name", c.getFirstName());
-            rs.updateString("last_name", c.getLastName());
-            rs.updateString("address", c.getAddress());
-            rs.updateDate("date_of_birth", c.getDateOfBirth());
-            rs.updateString("telephone_number", c.getTelephoneNumber());
+private Connection con;
+private Statement stmnt;
+private ResultSet rs;
+private String SQL;
+/**
+ * Retrieves the selected team coach.
+ * @param teamName
+ * @return 
+ */
+public Coach getCoach(String teamName){
 
-            rs.updateRow();
-            
-            rs.close();
-            stmnt.close();
-            con.close();
-            
-        } catch (SQLException err){
-            
-            System.out.println(err.getMessage());
-            
-        }
-        
-    }
-    /**
-     * Deletes the details of the selected team coach.
-     * @param team 
-     */
-    public void deleteCoach(String team){
-        
-        try{
-            
-            String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
-            con = DriverManager.getConnection(host, uName, uPass);
-            
-            stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            SQL = "SELECT * FROM JFL.COACH WHERE team_name = '" + team + "'";
-            rs = stmnt.executeQuery(SQL);
-            rs.next();
+    Coach c = new Coach();
 
-            rs.deleteRow();
-            
-            rs.close();
-            stmnt.close();
-            con.close();
-            
-        } catch (SQLException err){
-            
-            System.out.println(err.getMessage());
-            
+    try{
+
+        String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+        con = DriverManager.getConnection(host, uName, uPass);
+
+        stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        SQL = "SELECT * FROM JFL.COACH WHERE team_name = '" + teamName + "'";
+        rs = stmnt.executeQuery(SQL);
+
+        if(!rs.next()){
+
+            //c.Coach("", "", "", null, "", "");
+            throw new UI.Home.NoPersonException("No team coach");
+
         }
-        
+        c.Coach(rs.getString("first_name"), rs.getString("last_name"), rs.getString("address"), 
+                rs.getDate("date_of_birth"), rs.getString("telephone_number"), rs.getString("team_name"));
+
+        rs.close();
+        stmnt.close();
+        con.close();
+
+    } catch(NoPersonException e){
+
+        JOptionPane.showMessageDialog(null, e.getMessage());
+
+    }catch (SQLException err){
+
+        System.out.println(err.getMessage());
+
     }
+
+    return c;
+
+}
+/**
+ * Updates the details of the selected team coach.
+ * @param c 
+ */
+public void updateCoach(Coach c){
+
+    try{
+
+        String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+        con = DriverManager.getConnection(host, uName, uPass);
+
+        stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        SQL = "SELECT * FROM JFL.COACH WHERE team_name = '" + c.getTeam() + "'";
+        rs = stmnt.executeQuery(SQL);
+        rs.next();
+
+        rs.updateString("first_name", c.getFirstName());
+        rs.updateString("last_name", c.getLastName());
+        rs.updateString("address", c.getAddress());
+        rs.updateDate("date_of_birth", c.getDateOfBirth());
+        rs.updateString("telephone_number", c.getTelephoneNumber());
+
+        rs.updateRow();
+
+        rs.close();
+        stmnt.close();
+        con.close();
+
+    } catch (SQLException err){
+
+        System.out.println(err.getMessage());
+
+    }
+
+}
+/**
+ * Deletes the details of the selected team coach.
+ * @param team 
+ */
+public void deleteCoach(String team){
+
+    try{
+
+        String host = "jdbc:derby://localhost:1527/JFL", uName = "JFL", uPass = "JFL";
+        con = DriverManager.getConnection(host, uName, uPass);
+
+        stmnt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        SQL = "SELECT * FROM JFL.COACH WHERE team_name = '" + team + "'";
+        rs = stmnt.executeQuery(SQL);
+        rs.next();
+
+        rs.deleteRow();
+
+        rs.close();
+        stmnt.close();
+        con.close();
+
+    } catch (SQLException err){
+
+        System.out.println(err.getMessage());
+
+    }
+
+}
 }
 
 }

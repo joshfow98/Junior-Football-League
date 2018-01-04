@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 
 /**
- *
+ * UI to update referee records.
  * @author joshf
  */
 public class Referees extends javax.swing.JFrame {

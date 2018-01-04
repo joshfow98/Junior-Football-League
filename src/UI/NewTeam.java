@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import Objects.Team;
 
 /**
- *
+ * UI to create team records.
  * @author joshf
  */
 public class NewTeam extends javax.swing.JFrame {
@@ -204,7 +204,7 @@ public class NewTeam extends javax.swing.JFrame {
     /**
      * Creates a new team record.
      */
-private class NewTeamEngine {
+protected static class NewTeamEngine {
     /**
      * This method creates a new instance of the team class,
      * and outputs this to the database.

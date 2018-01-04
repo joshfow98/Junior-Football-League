@@ -6,7 +6,7 @@
 package Objects;
 import java.sql.Date;
 /**
- *
+ * Stores/returns details about a referee
  * @author joshf
  */
 public class Referee extends Person{

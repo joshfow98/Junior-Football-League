@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 /**
- *
+ * UI to create match records.
  * @author joshf
  */
 public class NewMatch extends javax.swing.JFrame {
@@ -270,7 +270,7 @@ public class NewMatch extends javax.swing.JFrame {
     /**
      * Creates a new match record.
      */
-private class NewMatchEngine {
+protected static class NewMatchEngine {
     /**
      * Creates a new match and stores it in the MATCHES table in the DB.
      * @param m 
